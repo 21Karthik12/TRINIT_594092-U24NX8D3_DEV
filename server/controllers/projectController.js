@@ -23,8 +23,14 @@ const getProject = async (req, res) => {
 /* Create a new project */
 const createProject = async (req, res) => {
     const {title, description, start_date, user_id} = req.body;
+    const profile_img = req.file;
     try {
         const project = await Project.create({title, description, start_date, user_id});
+        if(profile_img) {
+            project.profile_img = profile_img.path;
+        } else {
+            console.log(profile_img);
+        }
         res.status(200).json(project);
     } catch (err) {
         res.status(400).json({error: err.message})
@@ -51,7 +57,7 @@ const updateProject = async (req, res) => {
         return res.status(404).json({error: 'Project not found'});
     }
     const project = await Project.findOneAndUpdate({_id: id}, {
-        ...req.body
+        ...req.body, ...req.file
     });
     if(!project) {
         return res.status(404).json({error: 'Project not found'});

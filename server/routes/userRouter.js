@@ -20,7 +20,7 @@ router.post('/', upload, createUser);
 
 router.delete('/:id', deleteUser);
 
-router.patch('/:id', updateUser);
+router.patch('/:id', upload, updateUser);
 
 router.patch('/:id/addGroup', addGroup);
 

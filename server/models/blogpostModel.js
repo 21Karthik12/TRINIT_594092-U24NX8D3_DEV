@@ -23,7 +23,7 @@ const blogSchema = new Schema({
         type: Number,
         default: 0
     },
-    image: String
+    profile_img: String
 }, {timestamps: true});
 
 module.exports = mongoose.model('Blogpost', blogSchema);

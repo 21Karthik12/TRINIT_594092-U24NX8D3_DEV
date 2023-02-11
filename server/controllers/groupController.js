@@ -23,8 +23,14 @@ const getGroup = async (req, res) => {
 /* Create a new group */
 const createGroup = async (req, res) => {
     const {group_name, description} = req.body;
+    const profile_img = req.file;
     try {
         const group = await Group.create({group_name, description});
+        if(profile_img) {
+            user.profile_img = profile_img.path;
+        } else {
+            console.log(profile_img);
+        }
         res.status(200).json(group);
     } catch (err) {
         res.status(400).json({error: err.message})
@@ -51,7 +57,7 @@ const updateGroup = async (req, res) => {
         return res.status(404).json({error: 'Group not found'});
     }
     const group = await Group.findOneAndUpdate({_id: id}, {
-        ...req.body
+        ...req.body, ...req.file
     });
     if(!group) {
         return res.status(404).json({error: 'Group not found'});

@@ -10,16 +10,17 @@ const {
     addLike,
     removeLike
 } = require('../controllers/blogpostController');
+const upload = require('../middleware/upload');
 
 router.get('/', getBlogposts);
 
 router.get('/:id', getBlogpost);
 
-router.post('/', createBlogpost);
+router.post('/', upload, createBlogpost);
 
 router.delete('/:id', deleteBlogpost);
 
-router.patch('/:id', updateBlogpost);
+router.patch('/:id', upload, updateBlogpost);
 
 router.patch('/:id/addLike', addLike);
 

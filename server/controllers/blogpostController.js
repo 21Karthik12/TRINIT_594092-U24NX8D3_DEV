@@ -23,8 +23,14 @@ const getBlogpost = async (req, res) => {
 /* Create a new blogpost */
 const createBlogpost = async (req, res) => {
     const {title, description, publish_date, proj_id} = req.body;
+    const profile_img = req.file;
     try {
         const blogpost = await Blogpost.create({title, description, publish_date, proj_id});
+        if(profile_img) {
+            blogpost.profile_img = profile_img.path;
+        } else {
+            console.log(profile_img);
+        }
         res.status(200).json(blogpost);
     } catch (err) {
         res.status(400).json({error: err.message})
@@ -51,7 +57,7 @@ const updateBlogpost = async (req, res) => {
         return res.status(404).json({error: 'Blogpost not found'});
     }
     const blogpost = await Blogpost.findOneAndUpdate({_id: id}, {
-        ...req.body
+        ...req.body, ...req.body
     });
     if(!blogpost) {
         return res.status(404).json({error: 'Blogpost not found'});

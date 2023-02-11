@@ -23,7 +23,9 @@ const getUser = async (req, res) => {
 
 /* Create a new user */
 const createUser = async (req, res) => {
-    const {username, password, ngo, email, phone, interests, origin, impact, profile_img} = req.body;
+    const {username, password, ngo, email, phone, interests, origin, impact} = req.body;
+    const profile_img = req.file;
+    console.log(req.body);
     try {
         const user = await User.create({username, password, ngo, email, phone, interests, origin, impact});
         if(profile_img) {
@@ -57,7 +59,7 @@ const updateUser = async (req, res) => {
         return res.status(404).json({error: 'User not found'});
     }
     const user = await User.findOneAndUpdate({_id: id}, {
-        ...req.body
+        ...req.body, ...req.file
     });
     if(!user) {
         return res.status(404).json({error: 'User not found'});
