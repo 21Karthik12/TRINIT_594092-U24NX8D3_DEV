@@ -23,9 +23,9 @@ const getUser = async (req, res) => {
 
 /* Create a new user */
 const createUser = async (req, res) => {
-    const {username, password, ngo, email, interests, profile_img} = req.body;
+    const {username, password, ngo, email, phone, interests, profile_img} = req.body;
     try {
-        const user = await User.create({username, password, ngo, email, interests});
+        const user = await User.create({username, password, ngo, email, phone, interests});
         if(profile_img) {
             user.profile_img = profile_img.path;
         } else {
@@ -81,11 +81,28 @@ const addInterest = async (req, res) => {
     res.status(200).json(user);
 }
 
+/* Add a group */
+const addGroup = async (req, res) => {
+    const {id} = req.params;
+    const {group} = req.body;
+    if(!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({error: 'User not found'});
+    }
+    const user = await User.findOneAndUpdate({_id: id}, {
+        $push : {"groups": group}
+    });
+    if(!user) {
+        return res.status(404).json({error: 'User not found'});
+    }
+    res.status(200).json(user);
+}
+
 module.exports = {
     getUsers,
     getUser,
     createUser,
     deleteUser,
     updateUser,
-    addInterest
+    addInterest,
+    addGroup
 }

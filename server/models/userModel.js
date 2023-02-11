@@ -19,9 +19,13 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
+    phone: {
+        type: String,
+        required: true
+    },
     interests: [String],
     profile_img: String,
-    groups: [Number]
+    groups: [String]
 }, {timestamps: true});
 
 module.exports = mongoose.model('User', userSchema);

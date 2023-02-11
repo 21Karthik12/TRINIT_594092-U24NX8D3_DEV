@@ -7,7 +7,8 @@ const {
     createUser,
     deleteUser,
     updateUser,
-    addInterest
+    addInterest,
+    addGroup
 } = require('../controllers/userController');
 const upload = require('../middleware/upload');
 
@@ -20,6 +21,8 @@ router.post('/', upload, createUser);
 router.delete('/:id', deleteUser);
 
 router.patch('/:id', updateUser);
+
+router.patch('/:id/addGroup', addGroup);
 
 router.patch('/:id/addInterest', addInterest);
 

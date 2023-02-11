@@ -12,7 +12,7 @@ const groupSchema = new Schema({
         required: true
     },
     profile_img: String,
-    users: [Number]
+    users: [String]
 }, {timestamps: true});
 
 module.exports = mongoose.model('Group', groupSchema);

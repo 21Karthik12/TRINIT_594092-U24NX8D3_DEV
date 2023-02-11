@@ -59,10 +59,27 @@ const updateGroup = async (req, res) => {
     res.status(200).json(group);
 }
 
+/* Add a user */
+const addUser = async (req, res) => {
+    const {id} = req.params;
+    const {user} = req.body;
+    if(!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({error: 'Group not found'});
+    }
+    const group = await Group.findOneAndUpdate({_id: id}, {
+        $push : {"users": user}
+    });
+    if(!user) {
+        return res.status(404).json({error: 'Group not found'});
+    }
+    res.status(200).json(group);
+}
+
 module.exports = {
     getGroups,
     getGroup,
     createGroup,
     deleteGroup,
-    updateGroup
+    updateGroup,
+    addUser
 }
