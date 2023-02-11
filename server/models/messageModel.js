@@ -4,9 +4,9 @@ const Schema = mongoose.Schema;
 
 const messageSchema = new Schema({
     content: String,
-    source_id: Number,
-    dest_id: Number,
-    dest_group_id: Number,
+    source_id: String,
+    dest_id: String,
+    dest_group_id: String,
     group_message: {
         type: Boolean,
         default: false

@@ -1,7 +1,11 @@
 require('dotenv').config()
 const express = require('express');
 const mongoose = require('mongoose');
-const userRoutes = require('./routes/users');
+const userRouter = require('./routes/userRouter');
+const groupRouter = require('./routes/groupRouter');
+const projectRouter = require('./routes/projectRouter');
+const transactionRouter = require('./routes/transactionRouter');
+const blogpostRouter = require('./routes/blogpostRouter');
 
 const app = express();
 const path = require('path');
@@ -45,7 +49,11 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use('/api/users', userRoutes);
+app.use('/api/users', userRouter);
+app.use('/api/groups', groupRouter);
+app.use('/api/projects', projectRouter);
+app.use('/api/transactions', transactionRouter);
+app.use('/api/blogposts', blogpostRouter);
 
 app.get('/', (req, res) => {
     res.render('index');
@@ -71,5 +79,6 @@ mongoose.connect(process.env.MONGO_URI)
         });
     })
     .catch((err) => {
+        console.log('Error found');
         console.log(err);
     })

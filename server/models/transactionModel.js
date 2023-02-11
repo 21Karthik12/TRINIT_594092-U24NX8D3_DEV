@@ -2,28 +2,24 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const projectSchema = new Schema({
-    title: {
+const transactionSchema = new Schema({
+    transaction_id: {
         type: String,
         required: true
     },
-    description: {
+    amount: {
         type: String,
         required: true
     },
-    start_date: {
-        type: Date,
+    description: String,
+    proj_id: {
+        type: String,
         required: true
     },
-    likes: {
-        type: Number,
-        default: 0
-    },
-    image: String,
     user_id: {
-        type: Number,
+        type: String,
         required: true
     }
 }, {timestamps: true});
 
-module.exports = mongoose.model('Project', projectSchema);
+module.exports = mongoose.model('Transaction', transactionSchema);

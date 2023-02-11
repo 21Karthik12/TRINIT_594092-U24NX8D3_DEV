@@ -11,7 +11,7 @@ const groupSchema = new Schema({
         type: String,
         required: true
     },
-    profile_img: Blob,
+    profile_img: String,
     users: [Number]
 }, {timestamps: true});
 

@@ -15,15 +15,15 @@ const blogSchema = new Schema({
         type: Date,
         required: true
     },
+    proj_id: {
+        type: String,
+        required: true
+    },
     likes: {
         type: Number,
         default: 0
     },
-    image: String,
-    proj_id: {
-        type: Number,
-        required: true
-    }
+    image: String
 }, {timestamps: true});
 
 module.exports = mongoose.model('Blogpost', blogSchema);
