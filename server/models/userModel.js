@@ -24,6 +24,8 @@ const userSchema = new Schema({
         required: true
     },
     interests: [String],
+    origin: String,
+    impact: String,
     profile_img: String,
     groups: [String]
 }, {timestamps: true});

@@ -4,9 +4,7 @@ const router = express.Router();
 const {
     getTransaction,
     getTransactions,
-    createTransaction,
-    deleteTransaction,
-    updateTransaction
+    createTransaction
 } = require('../controllers/transactionController');
 
 router.get('/', getTransactions);
@@ -14,9 +12,5 @@ router.get('/', getTransactions);
 router.get('/:id', getTransaction);
 
 router.post('/', createTransaction);
-
-router.delete('/:id', deleteTransaction);
-
-router.patch('/:id', updateTransaction);
 
 module.exports = router;

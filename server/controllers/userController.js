@@ -23,9 +23,9 @@ const getUser = async (req, res) => {
 
 /* Create a new user */
 const createUser = async (req, res) => {
-    const {username, password, ngo, email, phone, interests, profile_img} = req.body;
+    const {username, password, ngo, email, phone, interests, origin, impact, profile_img} = req.body;
     try {
-        const user = await User.create({username, password, ngo, email, phone, interests});
+        const user = await User.create({username, password, ngo, email, phone, interests, origin, impact});
         if(profile_img) {
             user.profile_img = profile_img.path;
         } else {
@@ -33,7 +33,7 @@ const createUser = async (req, res) => {
         }
         res.status(200).json(user);
     } catch (err) {
-        res.status(400).json({error: err.message})
+        res.status(400).json({error: err.message});
     }
 }
 
