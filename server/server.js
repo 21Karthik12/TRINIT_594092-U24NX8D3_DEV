@@ -9,27 +9,12 @@ const blogpostRouter = require('./routes/blogpostRouter');
 
 const app = express();
 const path = require('path');
-
-// const multer = require('multer');
-// const storage = multer.diskStorage({
-//     destination: './public/uploads',
-//     filename: (req, file, cb) => {
-//         console.log(file);
-//         cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
-//     }
-// })
-// const upload = multer({
-//     storage: storage,
-//     limits: {fileSize: 1000000},
-//     fileFilter: (req, file, cb) => {
-//         checkFileType(file, cb);
-//     }
-// }).single('myImage');
+const cors = require('cors');
 
 app.set('view engine', 'ejs');
 
+app.use(cors());
 app.use(express.static('./public'));
-
 app.use(express.json());
 
 app.use((req, res, next) => {
@@ -46,19 +31,6 @@ app.use('/api/blogposts', blogpostRouter);
 app.get('/', (req, res) => {
     res.render('index');
 });
-
-// app.post('/upload', (req, res) => {
-//     upload(req, res, (err) => {
-//         if(err) {
-//             res.render('index', {
-//                 msg: err
-//             })
-//         } else {
-//             console.log(req.file);
-//             res.send('Uploaded');
-//         }
-//     });
-// });
 
 mongoose.connect(process.env.MONGO_URI)
     .then(() => {
