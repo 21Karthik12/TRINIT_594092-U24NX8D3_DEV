@@ -6,7 +6,9 @@ const {
     getBlogpost,
     createBlogpost,
     deleteBlogpost,
-    updateBlogpost
+    updateBlogpost,
+    addLike,
+    removeLike
 } = require('../controllers/blogpostController');
 
 router.get('/', getBlogposts);
@@ -18,5 +20,9 @@ router.post('/', createBlogpost);
 router.delete('/:id', deleteBlogpost);
 
 router.patch('/:id', updateBlogpost);
+
+router.patch('/:id/addLike', addLike);
+
+router.patch('/:id/removeLike', removeLike);
 
 module.exports = router;

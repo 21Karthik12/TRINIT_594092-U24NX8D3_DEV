@@ -59,10 +59,40 @@ const updateBlogpost = async (req, res) => {
     res.status(200).json(blogpost);
 }
 
+const addLike = async (req, res) => {
+    const {id} = req.params;
+    if(!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({error: 'Blogpost not found'});
+    }
+    const blogpost = await Blogpost.findOneAndUpdate({_id: id}, {
+        $inc: {"likes": 1}
+    });
+    if(!blogpost) {
+        return res.status(404).json({error: 'Blogpost not found'});
+    }
+    return res.status(200).json(blogpost);
+}
+
+const removeLike = async (req, res) => {
+    const {id} = req.params;
+    if(!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({error: 'Blogpost not found'});
+    }
+    const blogpost = await Blogpost.findOneAndUpdate({_id: id}, {
+        $inc: {"likes": -1}
+    });
+    if(!blogpost) {
+        return res.status(404).json({error: 'Blogpost not found'});
+    }
+    return res.status(200).json(blogpost);
+}
+
 module.exports = {
     getBlogposts,
     getBlogpost,
     createBlogpost,
     deleteBlogpost,
-    updateBlogpost
+    updateBlogpost,
+    addLike,
+    removeLike
 }

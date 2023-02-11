@@ -6,17 +6,21 @@ const {
     getUser,
     createUser,
     deleteUser,
-    updateUser
+    updateUser,
+    addInterest
 } = require('../controllers/userController');
+const upload = require('../middleware/upload');
 
 router.get('/', getUsers);
 
 router.get('/:id', getUser);
 
-router.post('/', createUser);
+router.post('/', upload, createUser);
 
 router.delete('/:id', deleteUser);
 
 router.patch('/:id', updateUser);
+
+router.patch('/:id/addInterest', addInterest);
 
 module.exports = router;

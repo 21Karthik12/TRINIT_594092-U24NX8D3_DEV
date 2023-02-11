@@ -1,3 +1,4 @@
+const { request } = require('express');
 const mongoose = require('mongoose');
 const User = require('../models/userModel');
 
@@ -22,9 +23,14 @@ const getUser = async (req, res) => {
 
 /* Create a new user */
 const createUser = async (req, res) => {
-    const {username, password, ngo, email, interests} = req.body;
+    const {username, password, ngo, email, interests, profile_img} = req.body;
     try {
         const user = await User.create({username, password, ngo, email, interests});
+        if(profile_img) {
+            user.profile_img = profile_img.path;
+        } else {
+            console.log(profile_img);
+        }
         res.status(200).json(user);
     } catch (err) {
         res.status(400).json({error: err.message})
@@ -59,10 +65,27 @@ const updateUser = async (req, res) => {
     res.status(200).json(user);
 }
 
+/* Add an interest */
+const addInterest = async (req, res) => {
+    const {id} = req.params;
+    const {interest} = req.body;
+    if(!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({error: 'User not found'});
+    }
+    const user = await User.findOneAndUpdate({_id: id}, {
+        $push : {"interests": interest}
+    });
+    if(!user) {
+        return res.status(404).json({error: 'User not found'});
+    }
+    res.status(200).json(user);
+}
+
 module.exports = {
     getUsers,
     getUser,
     createUser,
     deleteUser,
-    updateUser
+    updateUser,
+    addInterest
 }

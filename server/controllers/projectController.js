@@ -59,10 +59,40 @@ const updateProject = async (req, res) => {
     res.status(200).json(project);
 }
 
+const addLike = async (req, res) => {
+    const {id} = req.params;
+    if(!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({error: 'Project not found'});
+    }
+    const project = await Project.findOneAndUpdate({_id: id}, {
+        $inc: {"likes": 1}
+    });
+    if(!project) {
+        return res.status(404).json({error: 'Project not found'});
+    }
+    return res.status(200).json(project);
+}
+
+const removeLike = async (req, res) => {
+    const {id} = req.params;
+    if(!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({error: 'Project not found'});
+    }
+    const project = await Project.findOneAndUpdate({_id: id}, {
+        $inc: {"likes": -1}
+    });
+    if(!project) {
+        return res.status(404).json({error: 'Project not found'});
+    }
+    return res.status(200).json(project);
+}
+
 module.exports = {
     getProjects,
     getProject,
     createProject,
     deleteProject,
-    updateProject
+    updateProject,
+    addLike,
+    removeLike
 }

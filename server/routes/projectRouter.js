@@ -6,7 +6,9 @@ const {
     getProject,
     createProject,
     deleteProject,
-    updateProject
+    updateProject,
+    addLike,
+    removeLike
 } = require('../controllers/projectController');
 
 router.get('/', getProjects);
@@ -18,5 +20,9 @@ router.post('/', createProject);
 router.delete('/:id', deleteProject);
 
 router.patch('/:id', updateProject);
+
+router.patch('/:id/addLike', addLike);
+
+router.patch('/:id/removeLike', removeLike);
 
 module.exports = router;
