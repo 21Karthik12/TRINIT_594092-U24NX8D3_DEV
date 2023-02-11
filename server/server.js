@@ -6,6 +6,8 @@ const groupRouter = require('./routes/groupRouter');
 const projectRouter = require('./routes/projectRouter');
 const transactionRouter = require('./routes/transactionRouter');
 const blogpostRouter = require('./routes/blogpostRouter');
+const accountRouter = require('./routes/accountRouter');
+const expenditureRouter = require('./routes/expenditureRouter');
 
 const app = express();
 const path = require('path');
@@ -27,6 +29,8 @@ app.use('/api/groups', groupRouter);
 app.use('/api/projects', projectRouter);
 app.use('/api/transactions', transactionRouter);
 app.use('/api/blogposts', blogpostRouter);
+app.use('/api/accounts', accountRouter);
+app.use('/api/expenditures', expenditureRouter);
 
 app.get('/', (req, res) => {
     res.render('index');
